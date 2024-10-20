@@ -1,5 +1,6 @@
 package com.giabao.finalproject.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,23 +9,17 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.giabao.finalproject.R;
 import com.giabao.finalproject.config.ApiConfig;
 import com.giabao.finalproject.model.UserEntity;
 import com.giabao.finalproject.service.IUserService;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,19 +60,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkLogin(String username, String password) {
-        Retrofit retrofit = new Retrofit
-                .Builder()
-                .baseUrl(ApiConfig.baseURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        IUserService usersApi = retrofit.create(IUserService.class);
+        IUserService usersApi = ApiConfig.getRetrofitClient().create(IUserService.class);
         Call<List<UserEntity>> call = usersApi.getAllUsers();
         call.enqueue(new Callback<List<UserEntity>>() {
             @Override
             public void onResponse(Call<List<UserEntity>> call, Response<List<UserEntity>> response) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-
+                UserEntity userEntity = response.body().stream()
+                        .filter(x -> x.getUsername().equals(username) && x.getPassword().equals(password))
+                        .findFirst().orElse(null);
+                if (userEntity == null) {
+                    Toast.makeText(getApplicationContext(), "Please check your username & password!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (userEntity.isAdmin()) {
+                    Intent adminIntent = new Intent(MainActivity.this, AdminActivity.class);
+                    startActivity(adminIntent);
+                } else {
+                    Intent userIntent = new Intent(MainActivity.this, UserActivity.class);
+                    startActivity(userIntent);
+                }
             }
 
             @Override
