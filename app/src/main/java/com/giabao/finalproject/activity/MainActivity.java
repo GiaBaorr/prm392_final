@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        //Hide ActionBar
+        getSupportActionBar().hide();
+
         txt_email = findViewById(R.id.login_txt_email);
         txt_password = findViewById(R.id.login_txt_password);
         btn_login = (Button) findViewById(R.id.login_btn_login);
