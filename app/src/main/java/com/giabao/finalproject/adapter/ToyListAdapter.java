@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.giabao.finalproject.R;
 import com.giabao.finalproject.model.ToyEntity;
 
@@ -34,11 +36,18 @@ public class ToyListAdapter extends ArrayAdapter<ToyEntity> {
         TextView toyName = convertView.findViewById(R.id.toy_name);
         TextView toyDescription = convertView.findViewById(R.id.toy_description);
         TextView toyPrice = convertView.findViewById(R.id.toy_price);
+        ImageView toyImage = convertView.findViewById(R.id.toy_image);
 
         toyName.setText(toy.getName());
         toyDescription.setText(toy.getDescription());
-        toyPrice.setText(String.valueOf(toy.getPrice()));
+        toyPrice.setText(String.format("$%d", toy.getPrice()));
+
+        // Load the image using Glide
+        Glide.with(context)
+                .load(toy.getImageUrl())
+                .into(toyImage);
 
         return convertView;
     }
+
 }
