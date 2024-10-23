@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btn_login;
     EditText txt_email, txt_password;
+    TextView txt_signUp;
 
     IUserService userService;
 
@@ -43,13 +45,27 @@ public class MainActivity extends AppCompatActivity {
 
         txt_email = findViewById(R.id.login_txt_email);
         txt_password = findViewById(R.id.login_txt_password);
+        txt_signUp = findViewById(R.id.login_tv_signup);
         btn_login = (Button) findViewById(R.id.login_btn_login);
+
+
+        txt_signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickSignUp();
+            }
+        });
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickLogin();
             }
         });
+    }
+
+    private void onClickSignUp() {
+        Intent signUpIntent = new Intent(MainActivity.this, SignUpActivity.class);
+        startActivity(signUpIntent);
     }
 
     private void onClickLogin() {

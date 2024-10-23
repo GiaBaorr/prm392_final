@@ -41,7 +41,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/signin_textview"
+                android:id="@+id/signup_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -133,7 +133,8 @@
                     android:paddingTop="8dp"
                     android:paddingRight="8dp"
                     android:paddingBottom="8dp"
-                    android:text="Get here"
+                    android:text="Get yours here!"
+                    android:clickable="true"
                     android:textColor="@color/primary_dark"
                     android:textSize="16sp" />
 
