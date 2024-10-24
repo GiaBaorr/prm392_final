@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.giabao.finalproject.R;
+import com.giabao.finalproject.fragment.MapsFragment;
 import com.giabao.finalproject.fragment.admin.ManageToyFragment;
 
 public class AdminActivity extends AppCompatActivity {
@@ -44,6 +45,8 @@ public class AdminActivity extends AppCompatActivity {
         int itemId = item.getItemId();
         if (itemId == R.id.manage_toy) {
             getSupportFragmentManager().beginTransaction().replace(R.id.admin_container_boost, new ManageToyFragment()).commit();
+        } else if (itemId == R.id.maps) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container_boost, new MapsFragment()).commit();
         }
 
         return true;

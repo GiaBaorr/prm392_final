@@ -5,4 +5,8 @@
         android:id="@+id/manage_toy"
         android:title="Manage toys"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/maps"
+        android:title="Maps"
+        app:showAsAction="never" />
 </menu>
