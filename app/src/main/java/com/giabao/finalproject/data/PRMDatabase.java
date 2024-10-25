@@ -63,6 +63,13 @@ public class PRMDatabase extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    public boolean deleteToy(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int affectedRow = db.delete("toy", "id = ?", new String[]{String.valueOf(id)});
+        db.close();
+        return affectedRow > 0;
+    }
+
     private void populateToys(SQLiteDatabase db) {
         List<ToyEntity> toyList = new ArrayList<>();
         toyList.add(new ToyEntity(0, "Toy Car", "A fast toy car", 50, 999, "https://media.istockphoto.com/id/1162308617/vi/anh/xe-t%E1%BA%A3i-%C4%91%E1%BB%93-ch%C6%A1i-tr%C3%AAn-n%E1%BB%81n-tr%E1%BA%AFng.jpg?s=2048x2048&w=is&k=20&c=y0NufL6PRblIbQf88536dIsKYb1osaROkncvQsyu5W0="));

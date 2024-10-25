@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="?android:attr/actionBarSize"
+    android:paddingBottom="?android:attr/actionBarSize"
     tools:context=".fragment.admin.ManageToyFragment">
 
     <ListView
