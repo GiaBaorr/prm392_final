@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_sand"
+    android:paddingTop="?android:attr/actionBarSize"
+    tools:context=".fragment.admin.AddToyFragment"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Add New Toy"
+                android:textColor="@color/primary_dark"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/add_product_iv_image"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_placeholder" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/add_product_txt_image_url"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:hint="Image URL"
+                    android:padding="10dp"
+                    android:textColor="@color/primary_chocolate"
+                    android:background="@color/primary_sand2"
+                    android:textColorLink="@color/primary_dark"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/add_product_btn_show_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary_btn"
+                    android:text="Display"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <EditText
+                android:id="@+id/add_product_txt_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="Toy Name"
+                android:padding="10dp"
+                android:textColor="@color/primary_chocolate"
+                android:background="@color/primary_sand2"
+                android:textColorLink="@color/primary_dark"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/add_product_txt_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="Description"
+                android:padding="10dp"
+                android:textColor="@color/primary_chocolate"
+                android:background="@color/primary_sand2"
+                android:textColorLink="@color/primary_dark"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/add_product_txt_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="Quantity"
+                android:inputType="number"
+                android:padding="10dp"
+                android:textColor="@color/primary_chocolate"
+                android:background="@color/primary_sand2"
+                android:textColorLink="@color/primary_dark"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/add_product_txt_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="Price"
+                android:inputType="numberDecimal"
+                android:padding="10dp"
+                android:textColor="@color/primary_chocolate"
+                android:background="@color/primary_sand2"
+                android:textColorLink="@color/primary_dark"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <Button
+                android:id="@+id/add_product_btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/primary_btn"
+                android:padding="10dp"
+                android:text="Save Toy"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

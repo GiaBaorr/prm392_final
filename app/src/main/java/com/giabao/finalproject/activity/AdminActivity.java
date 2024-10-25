@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.giabao.finalproject.R;
 import com.giabao.finalproject.fragment.MapsFragment;
+import com.giabao.finalproject.fragment.admin.AddToyFragment;
 import com.giabao.finalproject.fragment.admin.ManageToyFragment;
 
 public class AdminActivity extends AppCompatActivity {
@@ -47,6 +48,8 @@ public class AdminActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.admin_container_boost, new ManageToyFragment()).commit();
         } else if (itemId == R.id.maps) {
             getSupportFragmentManager().beginTransaction().replace(R.id.admin_container_boost, new MapsFragment()).commit();
+        } else if (itemId == R.id.add_toy) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.admin_container_boost, new AddToyFragment()).commit();
         }
 
         return true;
