@@ -36,10 +36,12 @@ public class ToyListAdapter extends ArrayAdapter<ToyEntity> {
         TextView toyName = convertView.findViewById(R.id.toy_name);
         TextView toyDescription = convertView.findViewById(R.id.toy_description);
         TextView toyPrice = convertView.findViewById(R.id.toy_price);
+        TextView toyQuantity = convertView.findViewById(R.id.toy_quantity);
         ImageView toyImage = convertView.findViewById(R.id.toy_image);
 
         toyName.setText(toy.getName());
         toyDescription.setText(toy.getDescription());
+        toyQuantity.setText(String.format("Quantity: %d", toy.getQuantity()));
         toyPrice.setText(String.format("$%d", toy.getPrice()));
 
         // Load the image using Glide
