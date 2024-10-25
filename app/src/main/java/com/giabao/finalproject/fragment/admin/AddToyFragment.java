@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -33,12 +34,16 @@ public class AddToyFragment extends Fragment {
     private ImageView toyImageView;
     private Button displayImageButton;
     private Button saveToyButton;
+    private TextView textViewTitle;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private String mParam1;
     private String mParam2;
+
+    private ToyEntity toy;
+    private boolean isEditing = false;
 
     public AddToyFragment() {
         // Required empty public constructor
@@ -60,6 +65,11 @@ public class AddToyFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
+            toy = (ToyEntity) getArguments().getSerializable("toy");
+            if (toy != null) {
+                isEditing = true;
+            }
         }
     }
 
@@ -80,6 +90,10 @@ public class AddToyFragment extends Fragment {
         toyImageView = view.findViewById(R.id.add_product_iv_image);
         displayImageButton = view.findViewById(R.id.add_product_btn_show_image);
         saveToyButton = view.findViewById(R.id.add_product_btn_save);
+        textViewTitle = view.findViewById(R.id.textViewTitle);
+        if (isEditing) {
+            populateFields();
+        }
 
         displayImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +108,18 @@ public class AddToyFragment extends Fragment {
                 saveToy();
             }
         });
+    }
+
+    private void populateFields() {
+        textViewTitle.setText("Update Toy");
+
+        toyNameEditText.setText(toy.getName());
+        descriptionEditText.setText(toy.getDescription());
+        quantityEditText.setText(String.valueOf(toy.getQuantity()));
+        priceEditText.setText(String.valueOf(toy.getPrice()));
+        imageUrlEditText.setText(toy.getImageUrl());
+
+        Glide.with(this).load(toy.getImageUrl()).into(toyImageView);
     }
 
     private void displayImage() {
@@ -112,21 +138,31 @@ public class AddToyFragment extends Fragment {
         int price = Integer.parseInt(priceEditText.getText().toString());
         String imageUrl = imageUrlEditText.getText().toString();
 
-        ToyEntity newToy = new ToyEntity();
-        newToy.setName(name);
-        newToy.setDescription(description);
-        newToy.setQuantity(quantity);
-        newToy.setPrice(price);
-        newToy.setImageUrl(imageUrl);
+        if (toy == null) {
+            toy = new ToyEntity();
+        }
 
-        saveToDB(newToy);
+        toy.setName(name);
+        toy.setDescription(description);
+        toy.setQuantity(quantity);
+        toy.setPrice(price);
+        toy.setImageUrl(imageUrl);
+
+        saveToDB(toy);
     }
 
     private void saveToDB(ToyEntity newToy) {
         PRMDatabase db = new PRMDatabase(getContext());
-        if (!db.insertToy(newToy)) {
-            Toast.makeText(this.getContext(), "Error happens", Toast.LENGTH_SHORT).show();
-            return;
+        if (isEditing) {
+            if (!db.updateToy(newToy)) {
+                Toast.makeText(this.getContext(), "Error happens", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } else {
+            if (!db.insertToy(newToy)) {
+                Toast.makeText(this.getContext(), "Error happens", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.admin_container_boost, new ManageToyFragment());

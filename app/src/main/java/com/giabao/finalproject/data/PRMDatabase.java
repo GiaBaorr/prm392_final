@@ -63,6 +63,22 @@ public class PRMDatabase extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    public Boolean updateToy(ToyEntity toyEntity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("name", toyEntity.getName());
+        values.put("description", toyEntity.getDescription());
+        values.put("imageUrl", toyEntity.getImageUrl());
+        values.put("quantity", toyEntity.getQuantity());
+        values.put("price", toyEntity.getPrice());
+
+        int rowsAffected = db.update("toy", values, "id = ?", new String[]{String.valueOf(toyEntity.getId())});
+
+        db.close();
+        return rowsAffected > 0;
+    }
+
     public boolean deleteToy(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         int affectedRow = db.delete("toy", "id = ?", new String[]{String.valueOf(id)});

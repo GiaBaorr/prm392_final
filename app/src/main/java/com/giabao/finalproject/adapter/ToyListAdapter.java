@@ -2,6 +2,7 @@ package com.giabao.finalproject.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.bumptech.glide.Glide;
 import com.giabao.finalproject.R;
 import com.giabao.finalproject.data.PRMDatabase;
+import com.giabao.finalproject.fragment.admin.AddToyFragment;
 import com.giabao.finalproject.model.ToyEntity;
 
 import java.util.List;
@@ -58,7 +63,12 @@ public class ToyListAdapter extends ArrayAdapter<ToyEntity> {
                 .into(toyImage);
 
         btnEditToy.setOnClickListener(v -> {
-
+            AddToyFragment fragment = new AddToyFragment();
+            Bundle args = new Bundle();
+            args.putSerializable("toy", toy);
+            fragment.setArguments(args);
+            FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.admin_container_boost, fragment).commit();
         });
 
         btnDeleteToy.setOnClickListener(v -> {
