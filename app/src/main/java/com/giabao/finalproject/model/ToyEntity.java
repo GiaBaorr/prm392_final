@@ -1,5 +1,7 @@
 package com.giabao.finalproject.model;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class ToyEntity implements Serializable {
@@ -69,5 +71,15 @@ public class ToyEntity implements Serializable {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return this.id == ((ToyEntity) obj).getId();
     }
 }

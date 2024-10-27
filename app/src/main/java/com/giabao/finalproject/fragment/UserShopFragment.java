@@ -79,7 +79,15 @@ public class UserShopFragment extends Fragment {
         buttonCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(cart.size());
+                Bundle bundle = new Bundle();
+                for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
+                    bundle.putInt(String.valueOf(entry.getKey()), entry.getValue());
+                }
+                Fragment checkoutFragment = new CheckoutFragment();
+                checkoutFragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.user_container, checkoutFragment)
+                        .addToBackStack(null).commit();
             }
         });
 
