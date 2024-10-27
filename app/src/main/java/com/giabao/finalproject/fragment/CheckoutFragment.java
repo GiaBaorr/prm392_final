@@ -1,5 +1,7 @@
 package com.giabao.finalproject.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,9 +18,15 @@ import com.giabao.finalproject.adapter.ReceiptAdapter;
 import com.giabao.finalproject.data.PRMDatabase;
 import com.giabao.finalproject.model.ToyEntity;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import vn.payos.PayOS;
+import vn.payos.type.CheckoutResponseData;
+import vn.payos.type.ItemData;
+import vn.payos.type.PaymentData;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +38,8 @@ public class CheckoutFragment extends Fragment {
     private List<ToyEntity> toyList;
     private ListView listView;
     private TextView textTotal;
+    private Button openLinkButton;
+    private String payUrl = "";
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -65,6 +76,7 @@ public class CheckoutFragment extends Fragment {
         getAllToys();
         listView = view.findViewById(R.id.list_receipt_items);
         textTotal = view.findViewById(R.id.text_total);
+        openLinkButton = view.findViewById(R.id.button_pay);
         int total = 0;
 
         Bundle bundle = getArguments();
@@ -79,10 +91,24 @@ public class CheckoutFragment extends Fragment {
                 }
             }
             textTotal.setText("Total: $" + total);
+            try {
+                generatePayment(total);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
             ReceiptAdapter adapter = new ReceiptAdapter(getContext(), cart);
             listView.setAdapter(adapter);
         }
 
+        openLinkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = payUrl;
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -100,5 +126,32 @@ public class CheckoutFragment extends Fragment {
             }
         }
         return null;
+    }
+
+    private void generatePayment(int total) throws Exception {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String clientId = "";
+                    String apiKey = "";
+                    String checksumKey = "";
+                    PayOS payOS = new PayOS(clientId, apiKey, checksumKey);
+
+                    ItemData itemData = ItemData.builder().name("Mỳ tôm Hảo Hảo ly").quantity(1).price(2000).build();
+                    String currentTimeString = String.valueOf(String.valueOf(new Date().getTime()));
+                    long orderCode = Long.parseLong(currentTimeString.substring(currentTimeString.length() - 6));
+                    PaymentData paymentData = PaymentData.builder().orderCode(orderCode).amount(total)
+                            .description("Order").returnUrl("https://github.com/").cancelUrl("https://github.com/")
+                            .item(itemData).build();
+                    CheckoutResponseData result = payOS.createPaymentLink(paymentData);
+                    payUrl = result.getCheckoutUrl();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
     }
 }
