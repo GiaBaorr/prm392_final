@@ -5,12 +5,25 @@
     android:layout_height="match_parent"
     tools:context=".fragment.UserShopFragment"
     android:paddingTop="?android:attr/actionBarSize"
+    android:background="@color/primary_sand"
     android:paddingBottom="?android:attr/actionBarSize">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@+id/toy_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:divider="@null"
+        android:paddingBottom="50dp"
+        android:dividerHeight="0dp"/>
+
+    <Button
+        android:id="@+id/button_checkout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Checkout"
+        android:padding="16dp"
+        android:background="@color/white"
+        android:layout_gravity="bottom|center_horizontal"
+        android:textColor="@color/primary_chocolate" />
 
 </FrameLayout>

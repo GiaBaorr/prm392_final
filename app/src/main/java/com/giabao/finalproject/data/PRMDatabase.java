@@ -125,5 +125,28 @@ public class PRMDatabase extends SQLiteOpenHelper {
         return toys;
     }
 
+    public List<ToyEntity> getAllAvailableToys() {
+        List<ToyEntity> toys = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM toy WHERE quantity > 0", null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                ToyEntity toy = new ToyEntity();
+                toy.setId(cursor.getInt(0));
+                toy.setName(cursor.getString(1));
+                toy.setDescription(cursor.getString(2));
+                toy.setImageUrl(cursor.getString(3));
+                toy.setQuantity(cursor.getInt(4));
+                toy.setPrice(cursor.getInt(5));
+
+                toys.add(toy);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return toys;
+    }
+
 
 }
