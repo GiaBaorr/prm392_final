@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(adminIntent);
                 } else {
                     Intent userIntent = new Intent(MainActivity.this, UserActivity.class);
+                    userIntent.putExtra("displayShop", true);
+                    userIntent.putExtra("userEntity", userEntity);
                     startActivity(userIntent);
                 }
             }
